@@ -18,11 +18,12 @@
                         <el-button class="search-btn" icon="Search" />
                     </template>
                 </el-input></el-menu-item>
-            <el-menu-item index="4" class="menu-item-font-size">个人中心</el-menu-item>
-            <el-menu-item index="5" v-if='!user.phone' class="notLogin2" route="/login">
+            <el-menu-item v-if='user.phone' class="menu-item-font-size">{{ user.phone }}</el-menu-item>
+            <el-menu-item index="5" class="menu-item-font-size">个人中心</el-menu-item>
+            <el-menu-item index="6" v-if='!user.phone' class="notLogin2" route="/login">
                 <router-link to="/login">登录</router-link>
             </el-menu-item>
-            <el-menu-item index="6" v-if='!user.phone' class="notLogin">
+            <el-menu-item index="7" v-if='!user.phone' class="notLogin">
                 <router-link to="/register" style="color:white;width: 100%;">注册</router-link>
             </el-menu-item>
         </el-menu>
@@ -40,7 +41,6 @@ export default {
         const handleSelect = (index) => {
             activeIndex.value = index;
         };
-
         return {
             activeIndex,
             handleSelect,

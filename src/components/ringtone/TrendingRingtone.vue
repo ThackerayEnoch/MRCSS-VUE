@@ -1,33 +1,47 @@
 <template>
     <ImageCarousel />
-    <el-table stripe class="table" :data="data" :default-sort="{ prop: 'subscribe_count', order: 'descending' }">
-        <el-table-column type="index" label="排名" min-width="5%"></el-table-column>
-        <el-table-column prop="name" label="歌曲名" min-width="40%"></el-table-column>
-        <el-table-column prop="category" label="类别" min-width="10%"></el-table-column>
-        <el-table-column prop="subscribe_count" label="当前订阅数" min-width="10%" sortable></el-table-column>
-        <el-table-column prop="favourite_count" label="收藏数" min-width="10%" sortable></el-table-column>
-        <el-table-column prop="play_count" label="播放量" min-width="10%" sortable></el-table-column>
-        <el-table-column label="操作" min-width="15%">
-            <template #default="scoped">
-                <el-button type="primary" @click="someMethod(scoped.row)" :plain="buttonPlainType.isFavourite"
-                    circle><el-icon>
-                        <Star />
-                    </el-icon></el-button>
-                <el-button type="success" @click="someMethod(scoped.row)" :plain="buttonPlainType.isSubscribe"
-                    circle><el-icon>
-                        <CollectionTag />
-                    </el-icon></el-button>
-                <el-button type="danger" @click="someMethod(scoped.row)" plain circle><el-icon>
-                        <VideoPlay />
-                    </el-icon></el-button>
-            </template>
-        </el-table-column>
-    </el-table>
+    <div>
+        <el-table stripe class="table" :data="data" :default-sort="{ prop: 'subscribeCount', order: 'descending' }">
+            <el-table-column type="index" label="排名" min-width="5%"></el-table-column>
+            <el-table-column prop="name" label="歌曲名" min-width="40%"></el-table-column>
+            <el-table-column prop="category" label="类别" min-width="10%"></el-table-column>
+            <el-table-column prop="subscribeCount" label="当前订阅数" min-width="10%" sortable></el-table-column>
+            <el-table-column prop="favouriteCount" label="收藏数" min-width="10%" sortable></el-table-column>
+            <el-table-column prop="playCount" label="播放量" min-width="10%" sortable></el-table-column>
+            <el-table-column label="操作" min-width="15%">
+                <template #default="scoped">
+                    <el-button type="primary" @click="someMethod(scoped.row)" :plain="buttonPlainType.isFavourite"
+                        circle>
+                        <el-icon>
+                            <Star />
+                        </el-icon>
+                    </el-button>
+                    <el-button type="success" @click="someMethod(scoped.row)" :plain="buttonPlainType.isSubscribe"
+                        circle>
+                        <el-icon>
+                            <CollectionTag />
+                        </el-icon>
+                    </el-button>
+                    <el-button type="danger" @click="someMethod(scoped.row)" plain circle>
+                        <el-icon>
+                            <VideoPlay />
+                        </el-icon>
+                    </el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+        <el-pagination layout="prev, pager, next" :page-size="10" :page-count="10" v-model:current-page="currentPage"
+            @current-change="handlePageChange" />
+    </div>
 </template>
 
+
+
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, getCurrentInstance, watchEffect } from 'vue';
+import { useCounterStore } from '@/stores/counter.js';
 import ImageCarousel from '@/components/global/ImageCarousel.vue';
+import api from '@/api';
 
 export default {
     name: 'TrendingRingtone',
@@ -35,61 +49,57 @@ export default {
         ImageCarousel,
     },
     setup() {
-        // Your component data goes here
+        const { proxy } = getCurrentInstance();
+        const store = useCounterStore();
         const buttonPlainType = ref({
             isFavourite: true,
             isSubscribe: true,
         });
-        const data = ref([
-            {
-                id: 1,
-                name: 'Ringtone 1',
-                upload_time: '2021-01-01',
-                url: 'https://example.com/ringtone1.mp3',
-                category: 'Pop',
-                play_count: 100,
-                favourite_count: 10,
-                subscribe_count: 500,
-            },
-            {
-                id: 2,
-                name: 'Ringtone 2',
-                upload_time: '2021-01-02',
-                url: 'https://example.com/ringtone2.mp3',
-                category: 'Rock',
-                play_count: 200,
-                favourite_count: 20,
-                subscribe_count: 10,
-            },
-            {
-                id: 3,
-                name: 'Ringtone 3',
-                upload_time: '2021-01-03',
-                url: 'https://example.com/ringtone3.mp3',
-                category: 'Classical',
-                play_count: 300,
-                favourite_count: 30,
-                subscribe_count: 15,
+        const pageSize = ref(10); // 每页显示10行数据
+        const totalItems = ref(100); // 总共100行数据 (10页)
+        const currentPage = ref(1);
+        const data = ref([]);
+
+        const getRingtones = async (page) => {
+            try {
+                const result = await api.getRingtoneList(page, pageSize.value, "subscribe_count", store.ringtoneType);
+                if (result.data.status === 'SUCCESS') {
+                    data.value = result.data.data;
+                    totalItems.value = result.data.total; // 更新总项数
+                } else {
+                    proxy.$globalMethods.error('获取铃声失败', result.data.message, proxy.$notify);
+                }
+            } catch (error) {
+                proxy.$globalMethods.error('获取铃声失败', error.message, proxy.$notify);
             }
-        ]);
+        }
 
-        // Your component methods go here
-        const someMethod = () => {
-
+        const handlePageChange = (page) => {
+            currentPage.value = page;
+            getRingtones(currentPage.value);
         };
 
         onMounted(() => {
-            // Code to run when the component is mounted goes here
+            getRingtones(currentPage.value);
+            store.setRingtoneType('');
         });
-
+        watchEffect(() => {
+            getRingtones(currentPage.value)
+        }, { flush: 'post' });
         return {
             data,
-            someMethod,
             buttonPlainType,
+            totalItems,
+            pageSize,
+            handlePageChange,
+            getRingtones,
+            currentPage,
         };
     },
 };
 </script>
+
+
 
 <style scoped>
 .table {

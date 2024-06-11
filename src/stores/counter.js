@@ -1,14 +1,23 @@
-import { ref } from 'vue'
-import { defineStore } from 'pinia'
+import { ref } from 'vue';
+import { defineStore } from 'pinia';
 
 export const useCounterStore = defineStore('counter', () => {
   const user = ref({
-    nickname:'',
-    phone:'',
-  })
-  function setUser(nickname, phone) {
-    user.value.nickname = nickname
-    user.value.phone = phone
+    username: '',
+    phone: '',
+  });
+  const ringtoneType = ref('');
+  function setRingtoneType(type) {
+    if(type === 'All'){
+      ringtoneType.value=''
+    }else {
+    ringtoneType.value = type;
+    }
   }
-  return {user,setUser}
-})
+  function setUser(username, phone) {  // 修改为 username，保持一致
+    user.value.username = username;
+    user.value.phone = phone;
+  }
+
+  return { user, setUser, ringtoneType,setRingtoneType};
+});

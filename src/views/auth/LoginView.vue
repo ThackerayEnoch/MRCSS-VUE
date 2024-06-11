@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import LoginComponent from '@/components/authentication/LoginComponent.vue';
+import LoginComponent from '@/components/auth/LoginComponent.vue';
 export default {
     name: 'LoginView',
     components: {
@@ -42,7 +42,7 @@ export default {
     /* 让容器充满窗口 */
     width: 100vw;
     height: 100%;
-    background-image: url(https://www.dmoe.cc/random.php) !important;
+    background-image: url(https://api.dujin.org/bing/1920.php) !important;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
