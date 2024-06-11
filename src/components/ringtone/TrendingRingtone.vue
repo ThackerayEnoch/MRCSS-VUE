@@ -9,20 +9,18 @@
             <el-table-column prop="favouriteCount" label="收藏数" min-width="10%" sortable></el-table-column>
             <el-table-column prop="playCount" label="播放量" min-width="10%" sortable></el-table-column>
             <el-table-column label="操作" min-width="15%">
-                <template #default="scoped">
-                    <el-button type="primary" @click="someMethod(scoped.row)" :plain="buttonPlainType.isFavourite"
-                        circle>
+                <template #default="scope">
+                    <el-button type="primary" @click="favourite(scope.row.id)" :plain="!scope.row.isFavourite" circle>
                         <el-icon>
                             <Star />
                         </el-icon>
                     </el-button>
-                    <el-button type="success" @click="someMethod(scoped.row)" :plain="buttonPlainType.isSubscribe"
-                        circle>
+                    <el-button type="success" @click="subscribe(scope.row.id)" :plain="!scope.row.isSubscribe" circle>
                         <el-icon>
                             <CollectionTag />
                         </el-icon>
                     </el-button>
-                    <el-button type="danger" @click="someMethod(scoped.row)" plain circle>
+                    <el-button type="danger" @click="play(scope.row.id)" plain circle>
                         <el-icon>
                             <VideoPlay />
                         </el-icon>
@@ -59,7 +57,52 @@ export default {
         const totalItems = ref(100); // 总共100行数据 (10页)
         const currentPage = ref(1);
         const data = ref([]);
-
+        const favourite = async (id) => {
+            try {
+                const ringtone = data.value.find(r => r.id === id);
+                let result;
+                if (ringtone.isFavourite) {
+                    result = await api.cancelFavourite(id);
+                } else {
+                    result = await api.favourite(id);
+                }
+                if (result.data.status === 'SUCCESS') {
+                    proxy.$globalMethods.success(result.data.message, '', proxy.$notify);
+                    if (ringtone) {
+                        ringtone.isFavourite = !ringtone.isFavourite;
+                    }
+                } else {
+                    proxy.$globalMethods.error('收藏操作失败', result.data.message, proxy.$notify);
+                }
+            } catch (error) {
+                proxy.$globalMethods.error('收藏操作失败', error.message, proxy.$notify);
+            }
+        }
+        const subscribe = async (id) => {
+            try {
+                const ringtone = data.value.find(r => r.id === id);
+                let result;
+                if (ringtone.isSubscribe) {
+                    result = await api.cancelSubscribe(id);
+                } else {
+                    result = await api.subscribe(id);
+                }
+                if (result.data.status === 'SUCCESS') {
+                    proxy.$globalMethods.success(result.data.message, '', proxy.$notify);
+                    if (ringtone) {
+                        ringtone.isSubscribe = !ringtone.isSubscribe;
+                    }
+                } else {
+                    proxy.$globalMethods.error('订阅操作失败', result.data.message, proxy.$notify);
+                }
+            } catch (error) {
+                proxy.$globalMethods.error('订阅操作失败', error.message, proxy.$notify);
+            }
+        }
+        function play(id) {
+            //TODO
+            console.log(id);
+        }
         const getRingtones = async (page) => {
             try {
                 const result = await api.getRingtoneList(page, pageSize.value, "subscribe_count", store.ringtoneType);
@@ -94,6 +137,9 @@ export default {
             handlePageChange,
             getRingtones,
             currentPage,
+            favourite,
+            subscribe,
+            play,
         };
     },
 };

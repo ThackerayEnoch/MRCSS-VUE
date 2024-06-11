@@ -1,17 +1,27 @@
 <template>
     <div class="block text-center">
         <el-carousel height="200px">
-            <el-carousel-item v-for="item in 5" :key="item">
-                <h3 class="small justify-center" text="2xl">{{ item }}</h3>
+            <el-carousel-item v-for="item in data" :key="item.id">
+                <el-image :src="item.url" fit="scale-down"></el-image>
             </el-carousel-item>
         </el-carousel>
     </div>
 </template>
 <script>
+import { ref, onMounted } from 'vue';
+import api from '@/api';
 export default {
     name: 'ImageCarousel',
     setup() {
+        const data = ref([]);
+        onMounted(async () => {
+            const result = await api.getAdvertisement();
+            if (result.data.status === 'SUCCESS') {
+                data.value = result.data.data;
+            }
+        });
         return {
+            data
         };
     },
 };

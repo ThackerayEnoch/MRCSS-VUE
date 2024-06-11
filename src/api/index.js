@@ -10,5 +10,10 @@ const api = {
         type: type,
         category: category
       }}),
+    subscribe: (ringtoneId) => axios.post(path.subscribe,{ringtoneId}),
+    cancelSubscribe: (ringtoneId) => axios.delete(`${path.cancelSubscribe}/${ringtoneId}`),
+    favourite: (ringtoneId) => axios.post(path.favourite,{ringtoneId}),
+    cancelFavourite: (ringtoneId) => axios.delete(`${path.cancelFavourite}/${ringtoneId}`),
+    getAdvertisement: () => axios.get(path.getAdvertisement,{}),
     }
 export default api;
