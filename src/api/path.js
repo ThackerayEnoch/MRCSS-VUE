@@ -6,8 +6,10 @@ const base = {
     getRingtoneList: '/api/ringtone/getRingtones',
     subscribe:'/api/ringtone/subscribe',
     cancelSubscribe:'/api/ringtone/cancelSubscribe',
-    favourite:'api/ringtone/favourite',
+    favourite:'/api/ringtone/favourite',
     cancelFavourite:'/api/ringtone/cancelFavourite',
     getAdvertisement:'/api/ad/getAdvertisement',
+    getFavourites :'/api/ringtone/getFavourites',
+    getSubscribes :'/api/ringtone/getSubscribes',
 }
 export default base;

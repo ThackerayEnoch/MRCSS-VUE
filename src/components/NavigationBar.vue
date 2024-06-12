@@ -11,7 +11,7 @@
             <el-menu-item index="1" class="menu-item-font-size notLogin2"><router-link
                     to="/">铃声订购</router-link></el-menu-item>
             <el-menu-item index="2" class="menu-item-font-size notLogin2"><router-link
-                    to="/ringtone/manage">铃声管理</router-link></el-menu-item>
+                    to="/ringtone/manage/myfavourite">铃声管理</router-link></el-menu-item>
             <div class="flex-grow"></div>
             <el-menu-item><el-input v-model="searchInput" class="search" placeholder="音乐名/歌手">
                     <template #append>

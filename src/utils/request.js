@@ -54,13 +54,6 @@ instance.interceptors.response.use(response => {
             localStorage.removeItem('jwtToken')
             // 重定向到登录页面
             router.push('/login')
-        } else {
-            notify({
-                title: '错误',
-                message: error.response.data.message,
-                type: 'error',
-                position:'top-right'
-              });
         }
     } else {
         console.log('Error:', error.message);

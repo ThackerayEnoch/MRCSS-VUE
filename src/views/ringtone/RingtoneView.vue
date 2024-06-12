@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import { onMounted, getCurrentInstance } from 'vue'
 import ViewSideBar from '@/components/ringtone/ViewSideBar.vue';
 import TrendingRingtone from '@/components/ringtone/TrendingRingtone.vue';
 export default {
@@ -21,10 +20,6 @@ export default {
     },
     setup() {
         // Your setup code here
-        const { proxy } = getCurrentInstance();
-        onMounted(() => {
-            proxy.$globalMethods.getUserInfo();
-        });
         return {
         };
     },

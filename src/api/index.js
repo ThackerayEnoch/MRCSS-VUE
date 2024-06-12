@@ -15,5 +15,7 @@ const api = {
     favourite: (ringtoneId) => axios.post(path.favourite,{ringtoneId}),
     cancelFavourite: (ringtoneId) => axios.delete(`${path.cancelFavourite}/${ringtoneId}`),
     getAdvertisement: () => axios.get(path.getAdvertisement,{}),
+    getFavourites: () => axios.get(path.getFavourites,{}),
+    getSubscribes: () => axios.get(path.getSubscribes,{}),
     }
 export default api;

@@ -22,7 +22,30 @@ const router = createRouter({
           name: 'ringtone-manage',
           components:{ 
             ringtoneRouter:() => import('../views/ringtone/RingtoneManage.vue')
-          }
+          },
+          children:[
+            {
+              path:'/ringtone/manage/myfavourite',
+              name:'myfavourite',
+              components:{
+                Manage: () => import('../components/ringtone/FavouriteRingtoneManageComponents.vue')
+              }
+            },
+            {
+              path:'/ringtone/manage/mysubscribe',
+              name:'mysubscribe',
+              components:{
+                Manage: () => import('../components/ringtone/SubscribeRingtoneManageComponents.vue')
+              }
+            },
+            {
+              path:'/ringtone/manage/setting',
+              name:'setting',
+              components:{
+                Manage: () => import('../components/ringtone/RingtoneConfig.vue')
+              }
+            }
+          ]
         }
       ]
     },

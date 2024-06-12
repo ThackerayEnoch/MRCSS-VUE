@@ -11,13 +11,20 @@
 
 <script>
 import NavigationBar from '@/components/NavigationBar.vue';
-
+import { onMounted, getCurrentInstance } from 'vue';
 export default {
     name: 'MainView',
     components: {
         NavigationBar,
     },
+
     setup() {
+        const { proxy } = getCurrentInstance();
+        onMounted(() => {
+            proxy.$globalMethods.getUserInfo();
+        });
+        return {
+        };
 
     },
 };
