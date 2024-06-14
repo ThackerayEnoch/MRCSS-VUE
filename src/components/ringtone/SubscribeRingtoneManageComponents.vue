@@ -3,7 +3,12 @@
         <template #default>
             <el-table stripe class="table" :data="data" :default-sort="{ prop: 'subscribeCount', order: 'descending' }">
                 <el-table-column prop="subscribeTime" label="订阅日期" min-width="10%"></el-table-column>
-                <el-table-column prop="name" label="歌曲名" min-width="25%"></el-table-column>
+                <el-table-column prop="name" label="歌曲名" min-width="18%"></el-table-column>
+                <el-table-column prop="duration" label="时长" min-width="10%">
+                    <template #default="scope">
+                        {{ scope.row.duration }} 秒
+                    </template>
+                </el-table-column>
                 <el-table-column prop="category" label="类别" min-width="10%"></el-table-column>
                 <el-table-column prop="" label="本月总呼叫次数" min-width="15%" sortable></el-table-column>
                 <el-table-column prop="monthlyFee" label="费用" min-width="10%" sortable>
@@ -12,7 +17,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="" label="本月总花费" min-width="10%" sortable></el-table-column>
-                <el-table-column label="操作" min-width="20%">
+                <el-table-column label="操作" min-width="17%">
                     <template #default="scope">
                         <el-button type="warning" plain circle>
                             <el-icon>

@@ -44,6 +44,13 @@ const router = createRouter({
               components:{
                 Manage: () => import('../components/ringtone/RingtoneConfig.vue')
               }
+            },
+            {
+              path:'/ringtone/manage/group',
+              name:'group',
+              components:{
+                Manage: () => import('../components/ringtone/GroupManage.vue')
+              }
             }
           ]
         }

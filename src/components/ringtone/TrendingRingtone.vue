@@ -4,7 +4,12 @@
         <template #default>
             <el-table stripe class="table" :data="data" :default-sort="{ prop: 'subscribeCount', order: 'descending' }">
                 <el-table-column type="index" label="排名" min-width="5%"></el-table-column>
-                <el-table-column prop="name" label="歌曲名" min-width="40%"></el-table-column>
+                <el-table-column prop="name" label="歌曲名" min-width="30%"></el-table-column>
+                <el-table-column prop="duration" label="时长" min-width="10%">
+                    <template #default="scope">
+                        {{ scope.row.duration }} 秒
+                    </template>
+                </el-table-column>
                 <el-table-column prop="category" label="类别" min-width="10%"></el-table-column>
                 <el-table-column prop="subscribeCount" label="当前订阅数" min-width="10%" sortable></el-table-column>
                 <el-table-column prop="favouriteCount" label="收藏数" min-width="10%" sortable></el-table-column>

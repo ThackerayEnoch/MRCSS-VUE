@@ -5,6 +5,7 @@
             <el-menu-item index="/ringtone/manage/myfavourite">我的收藏</el-menu-item>
             <el-menu-item index="/ringtone/manage/mysubscribe">我的订阅</el-menu-item>
         </el-sub-menu>
+        <el-menu-item index="/ringtone/manage/group" class="category">组设置</el-menu-item>
         <el-menu-item index="/ringtone/manage/setting" class="category">铃声设置</el-menu-item>
         <el-menu-item index="3" class="category">查看账单</el-menu-item>
     </el-menu>

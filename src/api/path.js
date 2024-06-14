@@ -1,5 +1,5 @@
 const base = {
-    baseUrl: 'http://localhost:8081',
+    baseUrl: 'http:localhost:8081',
     login: '/api/auth/login',
     register : '/api/auth/register',
     getUserInfo: '/api/auth/getUserInfo',
@@ -11,5 +11,16 @@ const base = {
     getAdvertisement:'/api/ad/getAdvertisement',
     getFavourites :'/api/ringtone/getFavourites',
     getSubscribes :'/api/ringtone/getSubscribes',
+    getContacts:'/api/ringtone/getContactByUidAndRid',
+    getGroups:'/api/group/getGroupsByUid',
+    updateGroup:'/api/group/updateGroup',
+    deleteGroup:'/api/group/deleteGroup',
+    addGroup:'/api/group/addGroup',
+    getContactByUidAndRid:'/api/ringtone/getContactByUidAndRid',
+    getAllContactByGid : '/api/group/getAllContactByGid',
+    addContactToGroup :'/api/group/addContactToGroup',
+    deleteContactFromGroup:'/api/group/deleteContactFromGroup',
+    addContact :'/api/ringtone/addContact',
+    deleteContact :'/api/ringtone/deleteContact',
 }
 export default base;

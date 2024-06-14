@@ -2,8 +2,13 @@
     <el-skeleton :rows="10" :loading="isLoading" :throttle="100" animated>
         <template #default>
             <el-table stripe class="table" :data="data" :default-sort="{ prop: 'subscribeCount', order: 'descending' }">
-                <el-table-column prop="favouriteTime" label="收藏日期" min-width="20%"></el-table-column>
+                <el-table-column prop="favouriteTime" label="收藏日期" min-width="10%"></el-table-column>
                 <el-table-column prop="name" label="歌曲名" min-width="40%"></el-table-column>
+                <el-table-column prop="duration" label="时长" min-width="10%">
+                    <template #default="scope">
+                        {{ scope.row.duration }} 秒
+                    </template>
+                </el-table-column>
                 <el-table-column prop="category" label="类别" min-width="10%"></el-table-column>
                 <el-table-column prop="monthlyFee" label="费用" min-width="10%" sortable>
                     <template v-slot="scope">
