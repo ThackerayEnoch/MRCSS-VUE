@@ -43,7 +43,7 @@
                 <el-table-column prop="callCount" label="拨打次数" min-width="15%"></el-table-column>
                 <el-table-column prop="" label="产生费用" min-width="20%">
                     <template #default="scope">
-                        <span>{{ ringtoneData[selectValue].monthlyFee * scope.row.callCount }} 元</span>
+                        <span>{{ ringtoneData[selectValue].monthlyFee * scope.row.callCount / 100 }} 元</span>
                     </template>
                 </el-table-column>
                 <el-table-column min-width="35%">

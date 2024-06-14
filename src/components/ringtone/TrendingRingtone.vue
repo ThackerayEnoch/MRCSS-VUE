@@ -80,6 +80,7 @@ export default {
                     proxy.$globalMethods.success(result.data.message, '', proxy.$notify);
                     if (ringtone) {
                         ringtone.isFavourite = !ringtone.isFavourite;
+                        ringtone.favouriteCount = ringtone.isFavourite ? ringtone.favouriteCount + 1 : ringtone.favouriteCount - 1;
                     }
                 } else {
                     proxy.$globalMethods.error('收藏操作失败', result.data.message, proxy.$notify);
@@ -101,6 +102,7 @@ export default {
                     proxy.$globalMethods.success(result.data.message, '', proxy.$notify);
                     if (ringtone) {
                         ringtone.isSubscribe = !ringtone.isSubscribe;
+                        ringtone.subscribeCount = ringtone.isSubscribe ? ringtone.subscribeCount + 1 : ringtone.subscribeCount - 1;
                     }
                 } else {
                     proxy.$globalMethods.error('订阅操作失败', result.data.message, proxy.$notify);
